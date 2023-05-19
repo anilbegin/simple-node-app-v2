@@ -11,15 +11,15 @@
     <h1 class="display-4 text-center py-1">Short-Note</h1>
     
     <div class="jumbotron p-3 shadow-sm">
-      <form action="/create-item" method="POST">
+      <form id="our-form" action="/create-item" method="POST">
         <div class="d-flex align-items-center">
-          <input autofocus autocomplete="off" name="item" class="form-control mr-3" type="text" style="flex: 1;">
+          <input id="our-field" autofocus autocomplete="off" name="item" class="form-control mr-3" type="text" style="flex: 1;">
           <button class="btn btn-primary">Add New Note</button>
         </div>
       </form>
     </div>
     
-    <ul class="list-group pb-5">
+    <ul id="ul-list" class="list-group pb-5">
       <% itemx.map(item => { %>
         <% const date = new Date(item.date) %>
         <% 

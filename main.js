@@ -47,6 +47,8 @@ app.post('/answer', function(req, res) {
   }
 })
 
+// handled through backend
+/*
 app.post('/create-item', async function(req, res) {
   //console.log(req.body.item)
   const result = await db.collection('itemx').insertOne({text: req.body.item, date: new Date()})
@@ -55,6 +57,15 @@ app.post('/create-item', async function(req, res) {
     //console.log(result)
     res.redirect('/')
   }
+})
+*/
+
+// Client side rendering (browser.js)
+app.post('/add-item', async function(req, res) {
+const result = await db.collection('itemx').insertOne({text: req.body.text, date: new Date()})
+//  console.log(result.ops[0])
+  res.json(result.ops[0])
+  //res.send('success')
 })
 
 app.post('/edit-item', async function(req, res) {

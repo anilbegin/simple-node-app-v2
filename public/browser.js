@@ -1,3 +1,20 @@
+// used for Client side rendering
+function itemTemplate(item) {
+  const date = new Date(item.date)
+  return `
+  <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+      <div>
+        <span class="item-text">${item.text}</span>
+        <div class="font-weight-light"><span class='item-date'>(${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()})</span></div>
+      </div>     
+      <div>
+              <button data-id=${item._id} class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
+              <button data-id=${item._id} class="delete-me btn btn-danger btn-sm">Delete</button>
+      </div>
+  </li>
+  `
+}
+
 document.addEventListener('click', function(e) {
   // **Edit**
   if(e.target.classList.contains('edit-me')) {
@@ -24,6 +41,21 @@ document.addEventListener('click', function(e) {
     } 
   }
 })
+
+// Client side rendering for add-item
+const ourForm = document.getElementById('our-form')
+const ourField = document.getElementById('our-field')
+
+ourForm.addEventListener('submit', e => {
+  e.preventDefault()
+   axios.post('/add-item', {text: ourField.value}).then(function(response) {
+    //console.log(response.data)
+    document.getElementById('ul-list').insertAdjacentHTML('beforeend', itemTemplate(response.data))
+   }).catch(function() {
+    console.log('There seems to be a problem')
+   })
+})
+
 
 
 
