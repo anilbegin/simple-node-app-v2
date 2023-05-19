@@ -20,30 +20,13 @@
     </div>
     
     <ul id="ul-list" class="list-group pb-5">
-      <% itemx.map(item => { %>
-        <% const date = new Date(item.date) %>
-        <% 
-         let theDate = date.getDate()
-         let theMonth = date.getMonth() +1
-         let theYear = date.getFullYear()
-         let theHour = date.getHours()
-         let theMinute = date.getMinutes()
-         theMinute = theMinute < 10 ? '0' + theMinute : theMinute 
-        %>
-      <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-        <div>
-          <span class="item-text"><%= item.text %></span>
-          <div class="font-weight-light"><span class='item-date'>(<%= theDate %>/<%=  theMonth %>/<%= theYear  %>, <%= theHour %>:<%= theMinute %>)</span></div>
-        </div>     
-        <div>
-                <button data-id=<%= item._id %> class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-                <button data-id=<%= item._id %> class="delete-me btn btn-danger btn-sm">Delete</button>
-        </div>
-      </li>
-      <% }) %>
+     <% // client side rendering implemented for rendering list of items initially %>
     </ul>
     
   </div>
+
+  <script> let items = <%- JSON.stringify(itemx)  %></script>
+
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
   <script src="/browser.js"></script>
 </body>
