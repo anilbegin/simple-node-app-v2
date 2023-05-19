@@ -51,6 +51,8 @@ ourForm.addEventListener('submit', e => {
    axios.post('/add-item', {text: ourField.value}).then(function(response) {
     //console.log(response.data)
     document.getElementById('ul-list').insertAdjacentHTML('beforeend', itemTemplate(response.data))
+    ourField.value = ''
+    ourField.focus()
    }).catch(function() {
     console.log('There seems to be a problem')
    })
