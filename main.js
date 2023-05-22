@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: false}))
 // database connection
 let db
 //const connectionString = ''
-mongodb.connect(process.env.CONNECTIONSTRING, {useUnifiedTopology: true}, function(err, client) {
+mongodb.connect(process.env.CONNECTIONSTRING, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
   db = client.db()
 
   app.listen(3000)
