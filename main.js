@@ -16,13 +16,18 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: false}))
 
+let port = process.env.PORT
+if (port == null || port == "") {
+  port = 3000
+}
+
 // database connection
 let db
 //const connectionString = ''
 mongodb.connect(process.env.CONNECTIONSTRING, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
   db = client.db()
 
-  app.listen(3000)
+  app.listen(port)
 })
 
 // router level middleware // basic password protection
