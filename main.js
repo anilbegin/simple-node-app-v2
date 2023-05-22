@@ -16,13 +16,15 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: false}))
 
+// for database connection
+let db
+
 let port = process.env.PORT
 if (port == null || port == "") {
   port = 3000
 }
 
-// database connection
-let db
+// Establishing DB connection
 //const connectionString = ''
 mongodb.connect(process.env.CONNECTIONSTRING, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
   db = client.db()
