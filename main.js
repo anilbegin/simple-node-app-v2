@@ -26,9 +26,18 @@ mongodb.connect(process.env.CONNECTIONSTRING, {useUnifiedTopology: true}, functi
 })
 
 // router level middleware
-function getWeather() { return 0}
+function passwordProtect(req, res, next) {
+  res.set('WWW-Authenticate', 'Basic realm=Short Note App')
+  //console.log(req.headers.authorization)
+  if(req.headers.authorization == 'Basic YWJjZDoxMjM0') {
+    next()
+  } else {
+    res.status(401).send('Authorization required')
+  }
+  
+}
 
-app.get('/', async function(req, res) {
+app.get('/', passwordProtect, async function(req, res) {
   const itemx = await db.collection('itemx').find().toArray()
   //console.log(result)
   res.render('form', {itemx})
@@ -60,6 +69,7 @@ app.post('/create-item', async function(req, res) {
   }
 })
 */
+
 
 // Client side rendering (browser.js)(via axios request)
 app.post('/add-item', async function(req, res) {
