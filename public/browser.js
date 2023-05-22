@@ -20,7 +20,7 @@ document.addEventListener('click', function(e) {
   if(e.target.classList.contains('edit-me')) {
     let userInput = prompt('Please enter a valid item name', e.target.parentElement.parentElement.querySelector('.item-text').innerText)
     // console.log(userInput) // this has to be checked inside the Browser console 
-   if(userInput) {
+   if(userInput.trim() != "") {
     axios.post('/edit-item', {text: userInput, id: e.target.getAttribute('data-id')}).then(function(response) {
       // something here after the axios request is completed 
     //  console.log(response.data) // OP(browser console): {id: .... , text: .... , date: ....}
