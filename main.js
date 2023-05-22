@@ -25,7 +25,7 @@ mongodb.connect(process.env.CONNECTIONSTRING, {useUnifiedTopology: true}, functi
   app.listen(3000)
 })
 
-// router level middleware
+// router level middleware // basic password protection
 function passwordProtect(req, res, next) {
   res.set('WWW-Authenticate', 'Basic realm=Short Note App')
   //console.log(req.headers.authorization)
@@ -37,7 +37,9 @@ function passwordProtect(req, res, next) {
   
 }
 
-app.get('/', passwordProtect, async function(req, res) {
+app.use(passwordProtect)
+
+app.get('/', async function(req, res) {
   const itemx = await db.collection('itemx').find().toArray()
   //console.log(result)
   res.render('form', {itemx})
