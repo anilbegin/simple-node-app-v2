@@ -7,6 +7,7 @@ let app = express()
 const path = require('path')
 const mongodb = require('mongodb')
 const ObjectId = require('mongodb').ObjectId
+const sanitizeHTML = require('sanitize-html')
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -60,12 +61,13 @@ app.post('/create-item', async function(req, res) {
 })
 */
 
-// Client side rendering (browser.js)
+// Client side rendering (browser.js)(via axios request)
 app.post('/add-item', async function(req, res) {
   if(req.body.text == '') {
     console.log('user entered blank data')
   } else {
-    const result = await db.collection('itemx').insertOne({text: req.body.text, date: new Date()})
+    const safeText = sanitizeHTML(req.body.text, {allowedTags: [], allowedAttributes: {}})
+    const result = await db.collection('itemx').insertOne({text: safeText, date: new Date()})
     //  console.log(result.ops[0])
     res.json(result.ops[0])
     //res.send('success')
@@ -78,7 +80,8 @@ app.post('/edit-item', async function(req, res) {
   if(req.body.text == "" || req.body.text == null) {
     console.log('blank item not allowed!!')
   } else {
-    const result = await db.collection('itemx').findOneAndUpdate({_id: new ObjectId(req.body.id)}, {$set: {text: req.body.text, date: new Date()}}, {returnOriginal:false})
+    const safeText = sanitizeHTML(req.body.text, {allowedTags: [], allowedAttributes: {}})
+    const result = await db.collection('itemx').findOneAndUpdate({_id: new ObjectId(req.body.id)}, {$set: {text: safeText, date: new Date()}}, {returnOriginal:false})
     //console.log(result.value)
     res.json(result.value) // for extracting date value for Updated Date.
     //res.json({_id: info.insertedId, text: req.body.text})
