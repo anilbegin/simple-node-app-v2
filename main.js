@@ -45,20 +45,6 @@ app.get('/', async function(req, res) {
   res.render('form', {itemx})
 })
 
-app.post('/answer', function(req, res) {
-  if(req.body.color.trim().toUpperCase() == 'BLUE') {
-    res.send(`
-      <p>Congrats, your answer is correct</p>
-      <a href='/'>back</a>
-    `) 
-  } else {
-    res.send(`
-      <p>Sorry, your answer is Incorrect</p>
-      <a href='/'>try again</a>
-    `) 
-  }
-})
-
 // handled through backend
 /*
 app.post('/create-item', async function(req, res) {
