@@ -70,11 +70,16 @@ const result = await db.collection('itemx').insertOne({text: req.body.text, date
 
 app.post('/edit-item', async function(req, res) {
   //console.log(req.body.text)
-  const result = await db.collection('itemx').findOneAndUpdate({_id: new ObjectId(req.body.id)}, {$set: {text: req.body.text, date: new Date()}}, {returnOriginal:false})
-  //console.log(result.value)
-  res.json(result.value) // for extracting date value for Updated Date.
-  //res.json({_id: info.insertedId, text: req.body.text})
-  //res.send('success') // this res.send() causes -- *Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client*
+  if(req.body.text == "" || req.body.text == null) {
+    console.log('blank item not allowed!!')
+  } else {
+    const result = await db.collection('itemx').findOneAndUpdate({_id: new ObjectId(req.body.id)}, {$set: {text: req.body.text, date: new Date()}}, {returnOriginal:false})
+    //console.log(result.value)
+    res.json(result.value) // for extracting date value for Updated Date.
+    //res.json({_id: info.insertedId, text: req.body.text})
+    //res.send('success') // this res.send() causes -- *Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client*
+  }
+  
 })
 
 app.post('/delete-item', async function(req, res) {
