@@ -52,14 +52,19 @@ const ourField = document.getElementById('our-field')
 
 ourForm.addEventListener('submit', e => {
   e.preventDefault()
-   axios.post('/add-item', {text: ourField.value}).then(function(response) {
-    //console.log(response.data)
-    document.getElementById('ul-list').insertAdjacentHTML('beforeend', itemTemplate(response.data))
-    ourField.value = ''
+   if(ourField.value.trim() != "") {
+    axios.post('/add-item', {text: ourField.value}).then(function(response) {
+      //console.log(response.data)
+      document.getElementById('ul-list').insertAdjacentHTML('beforeend', itemTemplate(response.data))
+      ourField.value = ''
+      ourField.focus()
+     }).catch(function() {
+      console.log('There seems to be a problem')
+     })
+   } else {
     ourField.focus()
-   }).catch(function() {
-    console.log('There seems to be a problem')
-   })
+    console.log('front-end: blank field')
+   }
 })
 
 // Client side rendering for Initial page load of list of items
