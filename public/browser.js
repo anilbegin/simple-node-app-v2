@@ -18,7 +18,7 @@ function itemTemplate(item) {
 document.addEventListener('click', function(e) {
   // **Edit**
   if(e.target.classList.contains('edit-me')) {
-    let userInput = prompt('Please enter a valid item name')
+    let userInput = prompt('Please enter a valid item name', e.target.parentElement.parentElement.querySelector('.item-text').innerText)
     // console.log(userInput) // this has to be checked inside the Browser console 
    axios.post('/edit-item', {text: userInput, id: e.target.getAttribute('data-id')}).then(function(response) {
       // something here after the axios request is completed 
@@ -42,7 +42,7 @@ document.addEventListener('click', function(e) {
   }
 })
 
-// Client side rendering for add-item
+// Client side rendering for Add-item
 const ourForm = document.getElementById('our-form')
 const ourField = document.getElementById('our-field')
 
@@ -58,7 +58,7 @@ ourForm.addEventListener('submit', e => {
    })
 })
 
-// Client side rendering for initial page load of list of items
+// Client side rendering for Initial page load of list of items
 let ourHTML = items.map(function(item) {
   return itemTemplate(item)
 }).join('')
